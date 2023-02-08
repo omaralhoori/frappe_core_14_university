@@ -7,7 +7,9 @@
  "field_order": [
   "type",
   "label",
+  "icon_type",
   "icon",
+  "icon_image",
   "hidden",
   "link_details_section",
   "link_type",
@@ -37,7 +39,7 @@
    "reqd": 1
   },
   {
-   "depends_on": "eval:doc.type == \"Card Break\"",
+   "depends_on": "eval:doc.type == \"Card Break\" && doc.icon_type=='Icon'",
    "fieldname": "icon",
    "fieldtype": "Data",
    "label": "Icon"
@@ -107,12 +109,26 @@
    "fieldtype": "Int",
    "hidden": 1,
    "label": "Link Count"
+  },
+  {
+   "default": "Icon",
+   "depends_on": "eval:doc.type == \"Card Break\"",
+   "fieldname": "icon_type",
+   "fieldtype": "Select",
+   "label": "Icon Type",
+   "options": "Icon\nImage"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Card Break\" && doc.icon_type=='Image'",
+   "fieldname": "icon_image",
+   "fieldtype": "Attach",
+   "label": "Icon Image"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-06-01 11:23:28.990593",
+ "modified": "2023-02-08 22:00:48.056878",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace Link",
@@ -121,5 +137,6 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }

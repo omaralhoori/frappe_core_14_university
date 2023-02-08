@@ -143,7 +143,13 @@ body {
 				line-height: 1.3em;
 				color: var(--heading-color);
 				cursor: default;
+				align-items: center;
 
+				.widget_title_icon_image{
+					height: 48px;
+					width: 48px;
+					margin: 0 5px;
+				}
 				svg {
 					flex: none;
 					margin-right: 6px;
@@ -1012,6 +1018,12 @@ body {
 			overflow: hidden;
 			padding: 8px 0px 8px 12px;
 			flex: 1;
+			align-items: center;
+		}
+		.sidebar-item-icon-image{
+			height: 28px;
+			width: 28px;
+			margin: 0 5px
 		}
 	}
 

@@ -15,7 +15,9 @@
   "parent_page",
   "module",
   "column_break_3",
+  "icon_type",
   "icon",
+  "icon_image",
   "restrict_to_domain",
   "hide_custom",
   "public",
@@ -107,10 +109,10 @@
    "label": "Hide Custom DocTypes and Reports"
   },
   {
+   "depends_on": "eval:doc.icon_type=='Icon'",
    "fieldname": "icon",
    "fieldtype": "Icon",
-   "label": "Icon",
-   "read_only": 1
+   "label": "Icon"
   },
   {
    "fieldname": "links",
@@ -181,11 +183,24 @@
    "fieldname": "is_hidden",
    "fieldtype": "Check",
    "label": "Is Hidden"
+  },
+  {
+   "default": "Icon",
+   "fieldname": "icon_type",
+   "fieldtype": "Select",
+   "label": "Icon Type",
+   "options": "Icon\nImage"
+  },
+  {
+   "depends_on": "eval:doc.icon_type=='Image'",
+   "fieldname": "icon_image",
+   "fieldtype": "Attach Image",
+   "label": "Icon Image"
   }
  ],
  "in_create": 1,
  "links": [],
- "modified": "2023-01-07 19:37:39.512482",
+ "modified": "2023-02-08 21:24:57.280080",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Workspace",
