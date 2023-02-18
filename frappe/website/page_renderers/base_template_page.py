@@ -1,4 +1,5 @@
 import frappe
+from frappe.utils.jinja_globals import is_rtl
 from frappe.website.doctype.website_settings.website_settings import get_website_settings
 from frappe.website.page_renderers.base_renderer import BaseRenderer
 from frappe.website.website_components.metatags import MetaTags
@@ -39,7 +40,8 @@ class BaseTemplatePage(BaseRenderer):
 		if not self.context.base_template_path:
 			app_base = frappe.get_hooks("base_template")
 			self.context.base_template_path = app_base[-1] if app_base else "templates/base.html"
-
+		self.context.dir = "rtl" if is_rtl() else "ltr"
+		self.context.lang = frappe.lang
 	def set_title_with_prefix(self):
 		if (
 			self.context.title_prefix

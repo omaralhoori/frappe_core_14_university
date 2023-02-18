@@ -8,6 +8,7 @@
  "hide_custom": 0,
  "icon": "customization",
  "idx": 0,
+ "is_hidden": 0,
  "label": "Customization",
  "links": [
   {
@@ -133,7 +134,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-08-28 20:56:24.980719",
+ "modified": "2023-02-16 10:50:50.609542",
  "modified_by": "Administrator",
  "module": "Custom",
  "name": "Customization",

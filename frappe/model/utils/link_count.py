@@ -9,6 +9,8 @@ ignore_doctypes = ("DocType", "Print Format", "Role", "Module Def", "Communicati
 def notify_link_count(doctype, name):
 	"""updates link count for given document"""
 	if hasattr(frappe.local, "link_count"):
+				
+		if type(name) == list: name = name[0]
 		if (doctype, name) in frappe.local.link_count:
 			frappe.local.link_count[(doctype, name)] += 1
 		else:

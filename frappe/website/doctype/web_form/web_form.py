@@ -612,15 +612,17 @@ def get_link_options(web_form_name, doctype, allow_read_on_all_link_options=Fals
 		show_title_field_in_link = (
 			frappe.db.get_value("DocType", doctype, "show_title_field_in_link", cache=1) == 1
 		)
+
 		if title_field and show_title_field_in_link:
 			fields.append(f"{title_field} as label")
 
 		link_options = frappe.get_all(doctype, filters, fields)
-
+		
 		if title_field and show_title_field_in_link:
 			return json.dumps(link_options, default=str)
 		else:
-			return "\n".join([doc.value for doc in link_options])
+			options = [{"value": doc.value, "label": _(doc.value)}  for doc in link_options]
+			return json.dumps(options, default=str) #"\n".join([ ])
 
 	else:
 		raise frappe.PermissionError(
