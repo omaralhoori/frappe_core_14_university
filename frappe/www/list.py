@@ -29,7 +29,7 @@ def get_context(context, **dict_params):
 def get(doctype, txt=None, limit_start=0, limit=20, pathname=None, **kwargs):
 	"""Returns processed HTML page for a standard listing."""
 	limit_start = cint(limit_start)
-	raw_result = get_list_data(doctype, txt, limit_start, limit=limit + 1, **kwargs)
+	raw_result = get_list_data(doctype, txt, limit_start, limit=limit + 1, **kwargs) or []
 	show_more = len(raw_result) > limit
 	if show_more:
 		raw_result = raw_result[:-1]

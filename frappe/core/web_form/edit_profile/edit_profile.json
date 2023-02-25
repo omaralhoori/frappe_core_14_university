@@ -18,7 +18,7 @@
  "list_columns": [],
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2023-01-18 10:26:26.766414",
+ "modified": "2023-02-21 04:16:14.033160",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "edit-profile",
@@ -139,7 +139,7 @@
    "show_in_filter": 0
   },
   {
-   "allow_read_on_all_link_options": 0,
+   "allow_read_on_all_link_options": 1,
    "description": "",
    "fieldname": "language",
    "fieldtype": "Link",
