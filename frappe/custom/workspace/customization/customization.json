@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "customization",
+ "icon_image": "/assets/frappe/icons/icons/118.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Customization",
@@ -134,7 +136,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:50:50.609542",
+ "modified": "2023-02-26 20:58:24.212224",
  "modified_by": "Administrator",
  "module": "Custom",
  "name": "Customization",

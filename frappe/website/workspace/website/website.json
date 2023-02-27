@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "website",
+ "icon_image": "/assets/frappe/icons/icons/34.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Website",
@@ -233,7 +235,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:51:01.009790",
+ "modified": "2023-02-26 20:47:51.986604",
  "modified_by": "Administrator",
  "module": "Website",
  "name": "Website",

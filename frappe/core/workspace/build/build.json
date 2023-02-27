@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "tool",
+ "icon_image": "/assets/frappe/icons/icons/119.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Build",
@@ -274,7 +276,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:50:47.474407",
+ "modified": "2023-02-26 21:01:54.443048",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Build",

@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "tool",
+ "icon_image": "/assets/frappe/icons/icons/157.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Tools",
@@ -135,7 +137,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:51:00.188029",
+ "modified": "2023-02-26 20:46:57.117533",
  "modified_by": "Administrator",
  "module": "Automation",
  "name": "Tools",

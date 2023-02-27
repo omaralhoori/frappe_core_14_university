@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "setting",
+ "icon_image": "/assets/frappe/icons/icons/20.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Settings",
@@ -346,7 +348,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:51:01.479613",
+ "modified": "2023-02-26 20:48:16.553790",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Settings",

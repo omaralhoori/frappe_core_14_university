@@ -7,6 +7,8 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "integration",
+ "icon_image": "/assets/frappe/icons/icons/102.png",
+ "icon_type": "Image",
  "idx": 0,
  "is_hidden": 0,
  "label": "Integrations",
@@ -198,7 +200,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-02-16 10:50:51.415882",
+ "modified": "2023-02-26 20:55:49.569454",
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "Integrations",
