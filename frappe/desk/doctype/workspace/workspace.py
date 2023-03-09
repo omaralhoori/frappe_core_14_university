@@ -93,10 +93,11 @@ class Workspace(Document):
 
 		for idx, card in enumerate(config):
 			links = loads(card.get("links"))
-
+			deleted_card = {}
 			# remove duplicate before adding
 			for idx, link in enumerate(self.links):
 				if link.get("label") == card.get("label") and link.get("type") == "Card Break":
+					deleted_card = link
 					# count and set number of links for the card if link_count is 0
 					if link.link_count == 0:
 						for count, card_link in enumerate(self.links[idx + 1 :]):
@@ -105,10 +106,11 @@ class Workspace(Document):
 							link.link_count = count + 1
 
 					del self.links[idx : idx + link.link_count + 1]
-
 			self.append(
 				"links",
 				{
+					"icon_type": deleted_card.get('icon_type'),
+					"icon_image": deleted_card.get('icon_image'),
 					"label": card.get("label"),
 					"type": "Card Break",
 					"icon": card.get("icon"),
