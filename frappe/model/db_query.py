@@ -621,7 +621,9 @@ class DatabaseQuery:
 
 			# handle child / joined table fields
 			elif "." in field:
-				table, column = column.split(".", 1)
+				splited_column = column.split(".", 1)
+				if len(splited_column) < 2: continue
+				table, column = splited_column
 				ch_doctype = table.replace("`", "").replace("tab", "", 1)
 
 				if wrap_grave_quotes(table) in self.tables:
