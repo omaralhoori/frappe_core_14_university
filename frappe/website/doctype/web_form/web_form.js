@@ -50,7 +50,7 @@ frappe.ui.form.on("Web Form", {
 		}
 
 		!frm.doc.allow_multiple && frm.set_value("allow_delete", 0);
-		frm.doc.allow_multiple && frm.set_value("show_list", 1);
+		//frm.doc.allow_multiple && frm.set_value("show_list", 1);
 
 		if (!frm.doc.web_form_fields) {
 			frm.scroll_to_field("web_form_fields");
