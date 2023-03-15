@@ -125,7 +125,7 @@
 		{%- endif -%}
 	</section>
 
-	{%- if social_login -%}
+	{# {%- if social_login -%}
 	<section class='for-email-login'>
 		<div class="login-content page-card">
 			{{ logo_section() }}
@@ -140,12 +140,12 @@
 		</div>
 		{%- endif -%}
 	</section>
-	{%- endif -%}
+	{%- endif -%} #}
 	<section class='for-signup {{ "signup-disabled" if disable_signup else "" }}'>
 		<div class="login-content page-card">
 			{{ logo_section() }}
 			{%- if not disable_signup -%}
-			{{ signup_form_template }}
+			{% include signup_form_template %}
 			{%- else -%}
 			<div class='page-card-head mb-2'>
 				<span class='indicator gray'>{{_("Signup Disabled")}}</span>

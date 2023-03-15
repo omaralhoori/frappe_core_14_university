@@ -44,6 +44,8 @@ def get_context(context):
 		frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or _("Frappe")
 	)
 
+	context['phone_authenticate'] = frappe.db.get_single_value("Firebase Integration", "phone_authentication")
+	if context['phone_authenticate']: context['firebase_config'] = frappe.db.get_single_value("Firebase Integration", "firebase_config")
 	signup_form_template = frappe.get_hooks("signup_form_template")
 	if signup_form_template and len(signup_form_template):
 		path = signup_form_template[-1]
@@ -53,7 +55,7 @@ def get_context(context):
 		path = "frappe/templates/signup.html"
 
 	if path:
-		context["signup_form_template"] = frappe.get_template(path).render()
+		context["signup_form_template"] = path #frappe.get_template(path).render()
 
 	providers = frappe.get_all(
 		"Social Login Key",

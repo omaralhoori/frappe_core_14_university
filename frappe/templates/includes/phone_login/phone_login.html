@@ -1,0 +1,153 @@
+
+<script src="/assets/frappe/js/firebase/firebase-app-compat.js"></script>
+<script src="/assets/frappe/js/firebase/firebase-auth-compat.js"></script>
+<script src="/assets/frappe/js/firebase/firebase-ui-auth__{{lang.split('-')[0]}}.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/firebase/firebase-ui-auth-{{dir}}.css" />
+<style>
+  #firebaseui-auth-container{
+    margin: 10px auto;
+  }
+  .firebaseui-list-item:last-child{
+    display: none;
+  }
+  .firebaseui-list-item > button {
+    max-width: 100%;
+  }
+  .firebaseui-card-content{
+    padding: 0;
+  }
+  .form-complete-signup{
+    display: none;
+  }
+
+</style>
+<script type="text/javascript">
+
+function toggleCompleteSignupFields(){
+  document.querySelectorAll('.form-signup > .page-card-actions > *').forEach(e => e.style.display = 'none')
+    document.querySelectorAll('.form-signup > .page-card-body').forEach(e => e.style.display = 'none')
+    document.querySelectorAll('.form-complete-signup').forEach(e => e.style.display = 'block')
+}
+
+function handleSuccessSignIn(idToken){
+    toggleCompleteSignupFields();
+    document.querySelector("#complete-signup-btn").onclick = function(e) {
+          if (!checkMissingFields()){
+            return false;
+          }
+          if (!checkPasswordMatch()){
+            return false;
+          }
+          frappe.call({
+            method: "frappe.integrations.doctype.firebase_integration.firebase_integration.complete_user_mobile_signup",
+                args: {
+                  "id_token": idToken,
+                  "password": document.querySelector("#signup_password").value,
+                  "full_name": document.querySelector("#signup_username").value
+                },
+                callback: (res) => {
+                  if(res.message.msg){
+                    frappe.msgprint(res.message.msg)
+                    location.reload();
+                  }else if (res.message.error){
+                    frappe.msgprint(res.message.error)
+                  }
+                }
+          })
+    }
+}
+
+function checkPasswordMatch(){
+  if (document.querySelector("#signup_password").value == document.querySelector("#signup_confirm_password").value) {
+    return true;
+  }
+   frappe.msgprint('{{_("Passwords do not match")}}');
+  return false;
+}
+
+function checkMissingFields(){
+  if (document.querySelector("#signup_username").value == ''){
+     frappe.msgprint('{{_("Please fill full name field.")}}');
+     return false;
+  }
+  if (document.querySelector("#signup_password").value == ''){
+     frappe.msgprint('{{_("Please fill password field.")}}');
+     return false;
+  }
+  if (document.querySelector("#signup_confirm_password").value == ''){
+     frappe.msgprint('{{_("Please fill confirm password field.")}}');
+     return false;
+  }
+  return true;
+}
+
+const firebaseConfig = {{firebase_config}};
+
+firebase.initializeApp(firebaseConfig);
+  var uiConfig = {
+    callbacks: {
+          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+            var user = authResult.user;
+            var credential = authResult.credential;
+            var isNewUser = authResult.additionalUserInfo.isNewUser;
+            var providerId = authResult.additionalUserInfo.providerId;
+            var operationType = authResult.operationType;
+           
+            user.getIdToken(true).then(function(idToken) {
+              frappe.call({
+                method: "frappe.integrations.doctype.firebase_integration.firebase_integration.verify_user_token",
+                args: {
+                  "id_token": idToken
+                },
+                callback: (res) => {
+                  if(res.message.msg){
+                    handleSuccessSignIn(idToken);
+                  }
+                }
+              })
+            }).catch(function(error) {
+              // Handle error
+            });
+
+            return false;
+          },
+    },
+    signInOptions: [
+      {
+        provider:firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+        defaultCountry: 'JO'
+      },
+      {
+        provider:firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      }
+      
+    ],
+  };
+
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  ui.start('#firebaseui-auth-container', uiConfig);
+</script>
+<div id="firebaseui-auth-container"></div>
+<div class="form-complete-signup" role="form">
+    <div class="page-card-body">
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_username">{{ _("Full Name") }}</label>
+            <input type="text" id="signup_username" class="form-control" placeholder="{{ _('Full Name') }}"
+                required autofocus autocomplete="name">
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
+            <input type="password" id="signup_password" class="form-control"
+                placeholder="Password" required autocomplete="password">
+        </div>
+        <div class="form-group">
+            <label class="form-label sr-only" for="signup_confirm_password">{{ _("Confirm Password") }}</label>
+            <input type="password" id="signup_confirm_password" class="form-control"
+                placeholder="Confirm Password" required autocomplete="password">
+        </div>
+    </div>
+    <div class="page-card-actions">
+        <button class="btn btn-sm btn-primary btn-block btn-signup" id="complete-signup-btn"
+            type="submit">{{ _("Complete Sign up") }}</button>
+    </div>
+</div>

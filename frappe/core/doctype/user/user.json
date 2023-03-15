@@ -118,7 +118,8 @@
    "oldfieldname": "email",
    "oldfieldtype": "Data",
    "options": "Email",
-   "reqd": 1
+   "set_only_once": 1,
+   "unique": 1
   },
   {
    "fieldname": "first_name",
@@ -259,6 +260,7 @@
    "fieldtype": "Data",
    "label": "Mobile No",
    "options": "Phone",
+   "set_only_once": 1,
    "unique": 1
   },
   {
@@ -753,7 +755,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2022-09-19 16:05:46.485242",
+ "modified": "2023-03-14 21:23:35.289285",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",

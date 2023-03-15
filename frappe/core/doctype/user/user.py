@@ -46,8 +46,9 @@ class User(Document):
 		if self.get("is_admin") or self.get("is_guest"):
 			self.name = self.first_name
 		else:
-			self.email = self.email.strip().lower()
-			self.name = self.email
+			if self.email:
+				self.email = self.email.strip().lower()
+			self.name = self.email or self.mobile_no
 
 	def onload(self):
 		from frappe.config import get_modules_from_all_apps
@@ -73,7 +74,7 @@ class User(Document):
 
 		if self.name not in STANDARD_USERS:
 			self.validate_email_type(self.email)
-			self.validate_email_type(self.name)
+			#self.validate_email_type(self.name)
 		self.add_system_manager_role()
 		self.set_system_user()
 		self.set_full_name()
@@ -444,12 +445,12 @@ class User(Document):
 		if old_name in STANDARD_USERS:
 			throw(_("User {0} cannot be renamed").format(self.name))
 
-		self.validate_email_type(new_name)
+		#self.validate_email_type(new_name)
 
 	def validate_email_type(self, email):
 		from frappe.utils import validate_email_address
-
-		validate_email_address(email.strip(), True)
+		if email:
+			validate_email_address(email.strip(), True)
 
 	def after_rename(self, old_name, new_name, merge=False):
 		tables = frappe.db.get_tables()
