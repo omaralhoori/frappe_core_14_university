@@ -38,7 +38,7 @@ def complete_user_mobile_signup():
 	id_token = frappe.form_dict.id_token
 	password = frappe.form_dict.password
 	full_name = frappe.form_dict.full_name
-
+	initialize_app()
 	decoded_token = auth.verify_id_token(id_token)
 	mobile_phone= decoded_token['phone_number']
 	if frappe.db.exists("User", {"mobile_no": mobile_phone}): return {"error": _("This mobile number is used before")}
