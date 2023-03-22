@@ -1334,12 +1334,12 @@
   ],
   "isd": "+44"
  },
- "Israel": {
+ "Palestine": {
   "code": "il",
   "currency": "ILS",
   "currency_fraction": "Agora",
   "currency_fraction_units": 100,
-  "currency_name": "New Israeli Sheqel",
+  "currency_name": "Sheqel",
   "currency_symbol": "\u20aa",
   "number_format": "#,###.##",
   "timezones": [
