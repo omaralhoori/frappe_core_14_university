@@ -626,7 +626,9 @@ class DatabaseQuery:
 				table, column = splited_column
 				ch_doctype = table.replace("`", "").replace("tab", "", 1)
 
-				if wrap_grave_quotes(table) in self.tables:
+				if wrap_grave_quotes(table) in self.tables or wrap_grave_quotes(table) in (
+					d.table_name for d in self.link_tables
+				):
 					permitted_child_table_fields = get_permitted_fields(
 						doctype=ch_doctype, parenttype=self.doctype
 					)
