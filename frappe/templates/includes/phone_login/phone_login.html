@@ -132,18 +132,18 @@ firebase.initializeApp(firebaseConfig);
     <div class="page-card-body">
         <div class="form-group">
             <label class="form-label sr-only" for="signup_username">{{ _("Full Name") }}</label>
-            <input type="text" id="signup_username" class="form-control" placeholder="{{ _('Full Name') }}"
-                required autofocus autocomplete="name">
+            <input type="text" id="signup_username" name="user-phone-name" class="form-control" placeholder="{{ _('Full Name') }}"
+                 autocomplete="name">
         </div>
         <div class="form-group">
             <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
-            <input type="password" id="signup_password" class="form-control"
-                placeholder="Password" required autocomplete="password">
+            <input type="password" id="signup_password" name="user-phone-password" class="form-control"
+                placeholder="Password" autocomplete="password">
         </div>
         <div class="form-group">
             <label class="form-label sr-only" for="signup_confirm_password">{{ _("Confirm Password") }}</label>
-            <input type="password" id="signup_confirm_password" class="form-control"
-                placeholder="Confirm Password" required autocomplete="password">
+            <input type="password" id="signup_confirm_password" name="user-phone-password-confirm" class="form-control"
+                placeholder="Confirm Password" autocomplete="password">
         </div>
     </div>
     <div class="page-card-actions">
