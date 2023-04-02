@@ -92,6 +92,7 @@
   "generate_keys",
   "column_break_65",
   "api_secret",
+  "secret_key",
   "connections_tab"
  ],
  "fields": [
@@ -693,6 +694,13 @@
    "fieldname": "desk_settings_section",
    "fieldtype": "Section Break",
    "label": "Desk Settings"
+  },
+  {
+   "fieldname": "secret_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Secret Key",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
@@ -755,7 +763,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-03-14 21:23:35.289285",
+ "modified": "2023-03-30 19:45:51.724271",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",

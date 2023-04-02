@@ -27,11 +27,14 @@ def initialize_app():
 
 @frappe.whitelist(allow_guest=True)
 def verify_user_token():
-	initialize_app()
 	id_token = frappe.form_dict.id_token
-	decoded_token = auth.verify_id_token(id_token)
+	return verify_token(id_token)
+
+def verify_token(token: str) -> dict[str, str]:
+	initialize_app()
+	decoded_token = auth.verify_id_token(token)
 	uid = decoded_token['uid']
-	return {"msg": uid}
+	return {"msg": uid, "user": decoded_token['phone_number']}
 
 @frappe.whitelist(allow_guest=True)
 def complete_user_mobile_signup():

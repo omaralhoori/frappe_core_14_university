@@ -224,7 +224,7 @@ class LoginManager:
 
 		clear_sessions(frappe.session.user, keep_current=True)
 
-	def authenticate(self, user: str = None, pwd: str = None):
+	def authenticate(self, user: str = None, pwd: str = None, validate_password: bool = True):
 		from frappe.core.doctype.user.user import User
 
 		if not (user and pwd):
@@ -233,7 +233,7 @@ class LoginManager:
 			self.fail(_("Incomplete login details"), user=user)
 
 		_raw_user_name = user
-		user = User.find_by_credentials(user, pwd)
+		user = User.find_by_credentials(user, pwd, validate_password)
 
 		if not user:
 			self.fail("Invalid login credentials", user=_raw_user_name)
