@@ -165,9 +165,13 @@ frappe.msgprint = function (msg, title, is_minimizable) {
 		frappe.msg_dialog = new frappe.ui.Dialog({
 			title: __("Message"),
 			onhide: function () {
-				if (frappe.msg_dialog.custom_onhide) {
+				if (data.onhide){
+					data.onhide();
+				}
+				else if (frappe.msg_dialog.custom_onhide) {
 					frappe.msg_dialog.custom_onhide();
 				}
+				
 				frappe.msg_dialog.msg_area.empty();
 			},
 			minimizable: data.is_minimizable || is_minimizable,
