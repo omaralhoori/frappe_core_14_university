@@ -48,7 +48,8 @@ function handleSuccessSignIn(idToken){
                 callback: (res) => {
                   if(res.message.msg){
                     frappe.msgprint(res.message.msg)
-                    location.reload();
+                    //location.reload();
+                    location.href = res.message.redirect_to;
                   }else if (res.message.error){
                     frappe.msgprint(res.message.error)
                   }
@@ -102,6 +103,8 @@ firebase.initializeApp(firebaseConfig);
                 callback: (res) => {
                   if(res.message.msg){
                     handleSuccessSignIn(idToken);
+                  }else if (res.message.error){
+                     frappe.msgprint(res.message.error)
                   }
                 }
               })

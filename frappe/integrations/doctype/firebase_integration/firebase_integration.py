@@ -28,13 +28,15 @@ def initialize_app():
 @frappe.whitelist(allow_guest=True)
 def verify_user_token():
 	id_token = frappe.form_dict.id_token
-	return verify_token(id_token)
+	res = verify_token(id_token)
+	if frappe.db.exists("User", {"mobile_no": res.get("user")}): return {"error": _("This mobile number is used before")}
+	return res
 
 def verify_token(token: str) -> dict[str, str]:
 	initialize_app()
 	decoded_token = auth.verify_id_token(token)
 	uid = decoded_token['uid']
-	return {"msg": uid, "user": decoded_token['phone_number']}
+	return {"msg": uid, "user": format_mobile_number(decoded_token['phone_number'])}
 
 @frappe.whitelist(allow_guest=True)
 def complete_user_mobile_signup():
@@ -43,7 +45,7 @@ def complete_user_mobile_signup():
 	full_name = frappe.form_dict.full_name
 	initialize_app()
 	decoded_token = auth.verify_id_token(id_token)
-	mobile_phone= decoded_token['phone_number']
+	mobile_phone= format_mobile_number(decoded_token['phone_number'])
 	if frappe.db.exists("User", {"mobile_no": mobile_phone}): return {"error": _("This mobile number is used before")}
 	user_doc = frappe.get_doc({
 		"doctype": "User",
@@ -54,5 +56,15 @@ def complete_user_mobile_signup():
 
 	update_password(user_doc.name, password)
 	frappe.db.commit()
+	login_user(mobile_phone)
+	return {"msg": _("The user has been registered successfully"), "redirect_to": "/me"}
 
-	return {"msg": _("The user has been registered successfully")}
+def login_user(user):
+	login_manager = frappe.auth.LoginManager()
+	login_manager.authenticate(user=user, pwd=user, validate_password=False)
+	login_manager.post_login()
+
+def format_mobile_number(mobile_number):
+	if mobile_number and mobile_number.startswith("+"):
+		return mobile_number[1:]
+	return mobile_number
