@@ -111,6 +111,8 @@ def resolve_redirect(path, query_string=None):
 		return
 
 	redirect_to = frappe.cache().hget("website_redirects", path)
+	
+	redirect_to = redirect_uncompleted_user(redirect_to, path)
 
 	if redirect_to:
 		frappe.flags.redirect_location = redirect_to
@@ -133,6 +135,23 @@ def resolve_redirect(path, query_string=None):
 			frappe.cache().hset("website_redirects", path_to_match, redirect_to)
 			raise frappe.Redirect
 
+def redirect_uncompleted_user(redirect_to, path):
+	if frappe.session.user == 'Guest' or frappe.session.user == 'Administrator': return redirect_to
+
+	user = frappe.db.get_value("User", frappe.session.user, ["first_login", "user_type"])
+	if user:
+		if user[0]: return redirect_to
+		if user[1] == 'System User': return redirect_to
+	
+	student_name = frappe.db.get_value("Student", {"user": frappe.session.user}, ["name"])
+
+	if student_name and path == 'update-student-info/{user}/edit'.format(user=student_name):
+		return redirect_to
+	if path.startswith('update-student-info'):
+		return redirect_to
+	if len(path) > 50: return redirect_to
+
+	return 'update-student-info/{user}/edit'.format(user=student_name)
 
 def resolve_path(path):
 	if not path:
