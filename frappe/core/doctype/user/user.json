@@ -84,16 +84,15 @@
   "login_before",
   "bypass_restrict_ip_check_if_2fa_enabled",
   "last_login",
-  "first_login",
   "last_known_versions",
   "third_party_authentication",
   "social_logins",
   "api_access",
   "api_key",
+  "secret_key",
   "generate_keys",
   "column_break_65",
   "api_secret",
-  "secret_key",
   "connections_tab"
  ],
  "fields": [
@@ -700,15 +699,7 @@
    "fieldname": "secret_key",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Secret Key",
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "first_login",
-   "fieldtype": "Check",
-   "label": "First Login",
-   "read_only": 1
+   "label": "Secret Key"
   }
  ],
  "icon": "fa fa-user",
@@ -771,7 +762,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-05-13 12:52:10.541647",
+ "modified": "2023-05-19 17:18:33.255575",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
