@@ -137,7 +137,10 @@ def resolve_redirect(path, query_string=None):
 
 def redirect_uncompleted_user(redirect_to, path):
 	if frappe.session.user == 'Guest' or frappe.session.user == 'Administrator': return redirect_to
-
+	try:
+		if not frappe.db.get_single_value("Education Settings", "force_student_to_update_info"): return redirect_to
+	except:
+		return redirect_to
 	user = frappe.db.get_value("User", frappe.session.user, ["first_login", "user_type"])
 	if user:
 		if user[0]: return redirect_to
