@@ -84,6 +84,7 @@
   "login_before",
   "bypass_restrict_ip_check_if_2fa_enabled",
   "last_login",
+  "first_login",
   "last_known_versions",
   "third_party_authentication",
   "social_logins",
@@ -700,6 +701,12 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Secret Key"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_login",
+   "fieldtype": "Check",
+   "label": "First Login"
   }
  ],
  "icon": "fa fa-user",
@@ -762,7 +769,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-05-19 17:18:33.255575",
+ "modified": "2023-05-30 06:23:41.526791",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
