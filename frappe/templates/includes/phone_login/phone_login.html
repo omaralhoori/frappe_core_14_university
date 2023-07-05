@@ -1,134 +1,181 @@
-
 <script src="/assets/frappe/js/firebase/firebase-app-compat.js"></script>
 <script src="/assets/frappe/js/firebase/firebase-auth-compat.js"></script>
 <script src="/assets/frappe/js/firebase/firebase-ui-auth__{{lang.split('-')[0]}}.js"></script>
 <link type="text/css" rel="stylesheet" href="/assets/frappe/css/firebase/firebase-ui-auth-{{dir}}.css" />
 <style>
-  #firebaseui-auth-container{
+  #firebaseui-auth-container {
     margin: 10px auto;
   }
-  .firebaseui-list-item:last-child{
-    display: none;
-  }
-  .firebaseui-list-item > button {
-    max-width: 100%;
-  }
-  .firebaseui-card-content{
-    padding: 0;
-  }
-  .form-complete-signup{
+
+  .firebaseui-list-item:last-child {
     display: none;
   }
 
+  .firebaseui-list-item>button {
+    max-width: 100%;
+  }
+
+  .firebaseui-card-content {
+    padding: 0;
+  }
+
+  .form-complete-signup {
+    display: none;
+  }
 </style>
 <script type="text/javascript">
 
-function toggleCompleteSignupFields(){
-  document.querySelectorAll('.form-signup > .page-card-actions > *').forEach(e => e.style.display = 'none')
+  function toggleCompleteSignupFields() {
+    document.querySelectorAll('.form-signup > .page-card-actions > *').forEach(e => e.style.display = 'none')
     document.querySelectorAll('.form-signup > .page-card-body').forEach(e => e.style.display = 'none')
     document.querySelectorAll('.form-complete-signup').forEach(e => e.style.display = 'block')
-}
+  }
 
-function handleSuccessSignIn(idToken){
+  function handleSuccessSignIn(idToken) {
     toggleCompleteSignupFields();
-    document.querySelector("#complete-signup-btn").onclick = function(e) {
-          if (!checkMissingFields()){
-            return false;
+    document.querySelector("#complete-signup-btn").onclick = function (e) {
+      if (!checkMissingFields()) {
+        return false;
+      }
+      if (!checkPasswordMatch()) {
+        return false;
+      }
+      frappe.call({
+        method: "frappe.integrations.doctype.firebase_integration.firebase_integration.complete_user_mobile_signup",
+        args: {
+          "id_token": idToken,
+          "password": document.querySelector("#signup_password").value,
+          "full_name": document.querySelector("#signup_username").value,
+          "student_nationality": document.querySelector("#student_nationality").value,
+          "student_language": document.querySelector("#student_language").value,
+          "student_dob": document.querySelector("#student_dob").value,
+          "educational_certificate": document.querySelector("#educational_certificate").value,
+          "educational_level": document.querySelector("#educational_level").value,
+          "student_country": document.querySelector("#student_country").value,
+          "student_city": document.querySelector("#student_city").value,
+          "student_status": document.querySelector("#student_status").value,
+          "student_gender": document.querySelector("#student_gender").value,
+        },
+        callback: (res) => {
+          if (res.message.msg) {
+            frappe.msgprint(res.message.msg)
+            //location.reload();
+            location.href = res.message.redirect_to;
+          } else if (res.message.error) {
+            frappe.msgprint(res.message.error)
           }
-          if (!checkPasswordMatch()){
-            return false;
-          }
-          frappe.call({
-            method: "frappe.integrations.doctype.firebase_integration.firebase_integration.complete_user_mobile_signup",
-                args: {
-                  "id_token": idToken,
-                  "password": document.querySelector("#signup_password").value,
-                  "full_name": document.querySelector("#signup_username").value
-                },
-                callback: (res) => {
-                  if(res.message.msg){
-                    frappe.msgprint(res.message.msg)
-                    //location.reload();
-                    location.href = res.message.redirect_to;
-                  }else if (res.message.error){
-                    frappe.msgprint(res.message.error)
-                  }
-                }
-          })
+        }
+      })
     }
-}
+  }
 
-function checkPasswordMatch(){
-  if (document.querySelector("#signup_password").value == document.querySelector("#signup_confirm_password").value) {
+  function checkPasswordMatch() {
+    if (document.querySelector("#signup_password").value == document.querySelector("#signup_confirm_password").value) {
+      return true;
+    }
+    frappe.msgprint('{{_("Passwords do not match")}}');
+    return false;
+  }
+
+  function checkMissingFields() {
+    if (document.querySelector("#signup_username").value == '') {
+      frappe.msgprint('{{_("Please fill full name field.")}}');
+      return false;
+    }
+    if (document.querySelector("#signup_password").value == '') {
+      frappe.msgprint('{{_("Please fill password field.")}}');
+      return false;
+    }
+    if (document.querySelector("#signup_confirm_password").value == '') {
+      frappe.msgprint('{{_("Please fill confirm password field.")}}');
+      return false;
+    }
+    if (document.querySelector("#student_nationality").value == '') {
+      frappe.msgprint('{{_("Please fill nationality field.")}}');
+      return false;
+    }
+    if (document.querySelector("#student_language").value == '') {
+      frappe.msgprint('{{_("Please fill native language field.")}}');
+      return false;
+    }    
+    if (document.querySelector("#student_dob").value == '') {
+      frappe.msgprint('{{_("Please fill date of birth field.")}}');
+      return false;
+    }
+    if (document.querySelector("#educational_certificate").value == '') {
+      frappe.msgprint('{{_("Please fill latest educational certificate field.")}}');
+      return false;
+    }
+    if (document.querySelector("#educational_level").value == '') {
+      frappe.msgprint('{{_("Please fill educational level field.")}}');
+      return false;
+    }
+    if (document.querySelector("#student_country").value == '') {
+      frappe.msgprint('{{_("Please fill country field.")}}');
+      return false;
+    }
+    if (document.querySelector("#student_city").value == '') {
+      frappe.msgprint('{{_("Please fill city field.")}}');
+      return false;
+    }
+  if (document.querySelector("#student_status").value == '') {
+    frappe.msgprint('{{_("Please fill marital status field.")}}');
+    return false;
+  }
+  if (document.querySelector("#student_gender").value == '') {
+    frappe.msgprint('{{_("Please fill gender field.")}}');
+    return false;
+  }
     return true;
   }
-   frappe.msgprint('{{_("Passwords do not match")}}');
-  return false;
-}
 
-function checkMissingFields(){
-  if (document.querySelector("#signup_username").value == ''){
-     frappe.msgprint('{{_("Please fill full name field.")}}');
-     return false;
-  }
-  if (document.querySelector("#signup_password").value == ''){
-     frappe.msgprint('{{_("Please fill password field.")}}');
-     return false;
-  }
-  if (document.querySelector("#signup_confirm_password").value == ''){
-     frappe.msgprint('{{_("Please fill confirm password field.")}}');
-     return false;
-  }
-  return true;
-}
+  const firebaseConfig = {{ firebase_config }};
 
-const firebaseConfig = {{firebase_config}};
-
-firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
   var uiConfig = {
     callbacks: {
-          signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-            var user = authResult.user;
-            var credential = authResult.credential;
-            var isNewUser = authResult.additionalUserInfo.isNewUser;
-            var providerId = authResult.additionalUserInfo.providerId;
-            var operationType = authResult.operationType;
-           
-            user.getIdToken(true).then(function(idToken) {
-              frappe.call({
-                method: "frappe.integrations.doctype.firebase_integration.firebase_integration.verify_user_token",
-                args: {
-                  "id_token": idToken
-                },
-                callback: (res) => {
-                  if (res.message.msg && res.message.redirect_to){
-                    frappe.msgprint(res.message.msg)
-                    //location.reload();
-                    location.href = res.message.redirect_to;
-                  }
-                  else if(res.message.msg){
-                    handleSuccessSignIn(idToken);
-                  }else if (res.message.error){
-                     frappe.msgprint(res.message.error)
-                  }
-                }
-              })
-            }).catch(function(error) {
-              // Handle error
-            });
+      signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+        var user = authResult.user;
+        var credential = authResult.credential;
+        var isNewUser = authResult.additionalUserInfo.isNewUser;
+        var providerId = authResult.additionalUserInfo.providerId;
+        var operationType = authResult.operationType;
 
-            return false;
-          },
+        user.getIdToken(true).then(function (idToken) {
+          frappe.call({
+            method: "frappe.integrations.doctype.firebase_integration.firebase_integration.verify_user_token",
+            args: {
+              "id_token": idToken
+            },
+            callback: (res) => {
+              if (res.message.msg && res.message.redirect_to) {
+                frappe.msgprint(res.message.msg)
+                //location.reload();
+                location.href = res.message.redirect_to;
+              }
+              else if (res.message.msg) {
+                handleSuccessSignIn(idToken);
+              } else if (res.message.error) {
+                frappe.msgprint(res.message.error)
+              }
+            }
+          })
+        }).catch(function (error) {
+          // Handle error
+        });
+
+        return false;
+      },
     },
     signInOptions: [
       {
-        provider:firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+        provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
         defaultCountry: 'JO'
       },
       {
-        provider:firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       }
-      
+
     ],
   };
 
@@ -137,25 +184,98 @@ firebase.initializeApp(firebaseConfig);
 </script>
 <div id="firebaseui-auth-container"></div>
 <div class="form-complete-signup" role="form">
-    <div class="page-card-body">
-        <div class="form-group">
-            <label class="form-label sr-only" for="signup_username">{{ _("Full Name") }}</label>
-            <input type="text" id="signup_username" name="user-phone-name" class="form-control" placeholder="{{ _('Full Name') }}"
-                 autocomplete="name">
-        </div>
-        <div class="form-group">
-            <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
-            <input type="password" id="signup_password" name="user-phone-password" class="form-control"
-                placeholder="Password" autocomplete="password">
-        </div>
-        <div class="form-group">
-            <label class="form-label sr-only" for="signup_confirm_password">{{ _("Confirm Password") }}</label>
-            <input type="password" id="signup_confirm_password" name="user-phone-password-confirm" class="form-control"
-                placeholder="Confirm Password" autocomplete="password">
-        </div>
+  <div class="page-card-body">
+    <div class="form-group">
+      <label class="form-label sr-only" for="signup_username">{{ _("Full Name") }}</label>
+      <input type="text" id="signup_username" name="user-phone-name" class="form-control"
+        placeholder="{{ _('Full Name') }}" autocomplete="name">
     </div>
-    <div class="page-card-actions">
-        <button class="btn btn-sm btn-primary btn-block btn-signup" id="complete-signup-btn"
-            type="submit">{{ _("Complete Sign up") }}</button>
+    <div class="form-group">
+      <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
+      <input type="password" id="signup_password" name="user-phone-password" class="form-control"
+        placeholder="{{_('Password')}}" autocomplete="password">
     </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="signup_confirm_password">{{ _("Confirm Password") }}</label>
+      <input type="password" id="signup_confirm_password" name="user-phone-password-confirm" class="form-control"
+        placeholder="{{_('Confirm Password')}}" autocomplete="password">
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_nationality">{{ _("Nationality") }}</label>
+      <select type="" id="student_nationality" name="student-nationality" class="form-control"
+        placeholder="{{_('Nationality')}}">
+        <option value="">{{_('Nationality')}}</option>
+        {% for nationality in get_doctype_data('Nationality') %}
+        <option value="{{nationality.get('name')}}">{{_(nationality.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_gender">{{ _("Gender") }}</label>
+      <select type="" id="student_gender" name="student-gender" class="form-control"
+        placeholder="{{_('Gender')}}">
+        <option value="">{{_('Gender')}}</option>
+        {% for nationality in get_doctype_data('Gender') %}
+        <option value="{{nationality.get('name')}}">{{_(nationality.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_language">{{ _("Native Language") }}</label>
+      <input type="text" id="student_language" name="student-language" class="form-control"
+        placeholder="{{ _('Native Language') }}">
+    </div>
+    <div class="form-group">
+      <label class="form-label " for="student_dob">{{ _("Date of Birth") }}</label>
+      <input type="date" id="student_dob" name="student-dob" class="form-control"
+        placeholder="{{ _('Date of Birth') }}">
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="educational_certificate">{{ _("Latest Educational Certificate") }}</label>
+      <select type="" id="educational_certificate" name="educational-certificate" class="form-control"
+        placeholder="{{_('Latest Educational Certificate')}}">
+        <option value="">{{_('Latest Educational Certificate')}}</option>
+        {% for certificate in get_doctype_data('Educational Certificate') %}
+        <option value="{{certificate.get('name')}}">{{_(certificate.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="educational_level">{{ _("Educational Level") }}</label>
+      <select type="" id="educational_level" name="educational-level" class="form-control"
+        placeholder="{{_('Educational Level')}}">
+        <option value="">{{_('Educational Level')}}</option>
+        {% for certificate in get_doctype_data('Educational Level') %}
+        <option value="{{certificate.get('name')}}">{{_(certificate.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_country">{{ _("Country") }}</label>
+      <select type="" id="student_country" name="student-country" class="form-control" placeholder="{{_('Country')}}">
+        <option value="">{{_('Country')}}</option>
+        {% for nationality in get_doctype_data('Country') %}
+        <option value="{{nationality.get('name')}}">{{_(nationality.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_city">{{ _("City") }}</label>
+      <input type="text" id="student_city" name="student-city" class="form-control"
+        placeholder="{{ _('City') }}">
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="student_status">{{ _("Marital Status") }}</label>
+      <select type="" id="student_status" name="student-status" class="form-control" placeholder="{{_('Marital Status')}}">
+        <option value="">{{_('Marital Status')}}</option>
+        <option value="Single">{{_('Single')}}</option>
+        <option value="Married">{{_('Married')}}</option>
+        <option value="Widowed">{{_('Widowed')}}</option>
+        <option value="Divorced">{{_('Divorced')}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="page-card-actions">
+    <button class="btn btn-sm btn-primary btn-block btn-signup" id="complete-signup-btn" type="submit">{{ _("Complete Sign up") }}</button>
+  </div>
 </div>

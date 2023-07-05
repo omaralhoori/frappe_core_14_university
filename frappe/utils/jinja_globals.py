@@ -144,3 +144,8 @@ def is_rtl(rtl=None):
 	if rtl is None:
 		return local.lang in ["ar", "he", "fa", "ps"]
 	return rtl
+
+
+def get_doctype_data(doctype):
+	import frappe
+	return frappe.db.get_all(doctype, ['name'])

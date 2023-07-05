@@ -46,6 +46,15 @@ def complete_user_mobile_signup():
 	id_token = frappe.form_dict.id_token
 	password = frappe.form_dict.password
 	full_name = frappe.form_dict.full_name
+	student_nationality = frappe.form_dict.student_nationality
+	student_language = frappe.form_dict.student_language
+	student_dob = frappe.form_dict.student_dob
+	educational_certificate = frappe.form_dict.educational_certificate
+	educational_level = frappe.form_dict.educational_level
+	student_country = frappe.form_dict.student_country
+	student_city = frappe.form_dict.student_city
+	student_status = frappe.form_dict.student_status
+	student_gender = frappe.form_dict.student_gender
 	initialize_app()
 	decoded_token = auth.verify_id_token(id_token)
 	mobile_phone= format_mobile_number(decoded_token['phone_number'])
@@ -57,7 +66,17 @@ def complete_user_mobile_signup():
 	})
 	user_doc.insert(ignore_permissions=True)
 	from education.education.doctype.student_applicant.student_applicant import create_student_by_user
-	create_student_by_user(user_doc)
+	create_student_by_user(user_doc, {
+		"student_nationality": student_nationality,
+		"student_language": student_language,
+		"student_dob":student_dob,
+		"educational_certificate":educational_certificate,
+		"educational_level":educational_level,
+		"student_country":student_country,
+		"student_city":student_city,
+		"student_status":student_status,
+		"student_gender":student_gender,
+	} )
 	update_password(user_doc.name, password)
 	frappe.db.commit()
 	login_user(mobile_phone)
