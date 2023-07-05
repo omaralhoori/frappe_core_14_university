@@ -29,7 +29,10 @@ def initialize_app():
 def verify_user_token():
 	id_token = frappe.form_dict.id_token
 	res = verify_token(id_token)
-	if frappe.db.exists("User", {"mobile_no": res.get("user")}): return {"error": _("This mobile number is used before")}
+	if frappe.db.exists("User", {"mobile_no": res.get("user")}): 
+		# return {"error": _("This mobile number is used before")}
+		login_user(res.get("user"))
+		return {"msg": _("The user has been registered successfully"), "redirect_to": "/me"}
 	return res
 
 def verify_token(token: str) -> dict[str, str]:
@@ -53,10 +56,30 @@ def complete_user_mobile_signup():
 		"first_name": full_name,
 	})
 	user_doc.insert(ignore_permissions=True)
-
+	from education.education.doctype.student_applicant.student_applicant import create_student_by_user
+	create_student_by_user(user_doc)
 	update_password(user_doc.name, password)
 	frappe.db.commit()
 	login_user(mobile_phone)
+	return {"msg": _("The user has been registered successfully"), "redirect_to": "/me"}
+
+@frappe.whitelist(allow_guest=True)
+def test_user_mobile_signup():
+	password = frappe.form_dict.password
+	full_name = frappe.form_dict.full_name
+	user_id = frappe.form_dict.user_id
+	mobile_phone= format_mobile_number(user_id)
+	if frappe.db.exists("User", {"mobile_no": mobile_phone}): return {"error": _("This mobile number is used before")}
+	user_doc = frappe.get_doc({
+		"doctype": "User",
+		"mobile_no": mobile_phone,
+		"first_name": full_name,
+	})
+	user_doc.insert(ignore_permissions=True)
+	from education.education.doctype.student_applicant.student_applicant import create_student_by_user
+	create_student_by_user(user_doc)
+	update_password(user_doc.name, password)
+	frappe.db.commit()
 	return {"msg": _("The user has been registered successfully"), "redirect_to": "/me"}
 
 def login_user(user):

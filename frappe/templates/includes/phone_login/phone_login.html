@@ -101,7 +101,12 @@ firebase.initializeApp(firebaseConfig);
                   "id_token": idToken
                 },
                 callback: (res) => {
-                  if(res.message.msg){
+                  if (res.message.msg && res.message.redirect_to){
+                    frappe.msgprint(res.message.msg)
+                    //location.reload();
+                    location.href = res.message.redirect_to;
+                  }
+                  else if(res.message.msg){
                     handleSuccessSignIn(idToken);
                   }else if (res.message.error){
                      frappe.msgprint(res.message.error)
