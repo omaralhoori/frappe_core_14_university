@@ -4,6 +4,26 @@
 {{ _("My Account") }}
 {% endblock %}
 {% block page_content %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{message.get("message")}}</strong>
+    <button message-id="{{message.get('name')}}" message-type="{{message.get('message_type')}}" type="button" class="close" data-dismiss="alert"
+        onclick="dismiss_message(this)" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{%endfor%}
+<script>
+	function dismiss_message(e){
+		frappe.call({
+            method: "frappe.www.me.dismiss_message",
+            args: {
+                docname: e.getAttribute("message-id"),
+                doctype: e.getAttribute("message-type"),
+            },
+        })
+	}
+</script>
 <div class="my-account-container">
 <h3 class="my-account-header">{{_("My Account") }}</h3>
 <div class="row account-info d-flex flex-column">
