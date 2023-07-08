@@ -36,7 +36,6 @@ def get_messages():
 		for group in groups:
 			student_groups.append('"' + group.get('name') + '"')
 			groups = ",".join(student_groups)
-		print(groups)
 		group_messages = frappe.db.sql("""
 			SELECT name, message, 'Group Message' as message_type FROM `tabGroup Message`
 			WHERE student_group IN ({groups}) AND (seen_by IS NULL or seen_by NOT LIKE "%'{user}'%")
