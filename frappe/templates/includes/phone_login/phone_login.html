@@ -49,7 +49,7 @@
           "student_nationality": document.querySelector("#student_nationality").value,
           "student_language": document.querySelector("#student_language").value,
           "student_dob": document.querySelector("#student_dob").value,
-          "educational_certificate": document.querySelector("#educational_certificate").value,
+          "major": document.querySelector("#major").value,
           "educational_level": document.querySelector("#educational_level").value,
           "student_country": document.querySelector("#student_country").value,
           "student_city": document.querySelector("#student_city").value,
@@ -102,8 +102,8 @@
       frappe.msgprint('{{_("Please fill date of birth field.")}}');
       return false;
     }
-    if (document.querySelector("#educational_certificate").value == '') {
-      frappe.msgprint('{{_("Please fill latest educational certificate field.")}}');
+    if (document.querySelector("#major").value == '') {
+      frappe.msgprint('{{_("Please fill major field.")}}');
       return false;
     }
     if (document.querySelector("#educational_level").value == '') {
@@ -231,12 +231,12 @@
         placeholder="{{ _('Date of Birth') }}">
     </div>
     <div class="form-group">
-      <label class="form-label sr-only" for="educational_certificate">{{ _("Latest Educational Certificate") }}</label>
-      <select type="" id="educational_certificate" name="educational-certificate" class="form-control"
-        placeholder="{{_('Latest Educational Certificate')}}">
-        <option value="">{{_('Latest Educational Certificate')}}</option>
-        {% for certificate in get_doctype_data('Educational Certificate') %}
-        <option value="{{certificate.get('name')}}">{{_(certificate.get('name'))}}</option>
+      <label class="form-label sr-only" for="major">{{ _("Major") }}</label>
+      <select type="" id="major" name="major" class="form-control"
+        placeholder="{{_('Major')}}">
+        <option value="">{{_('Major')}}</option>
+        {% for major in get_doctype_data('Major') %}
+        <option value="{{major.get('name')}}">{{_(major.get('name'))}}</option>
         {% endfor %}
       </select>
     </div>

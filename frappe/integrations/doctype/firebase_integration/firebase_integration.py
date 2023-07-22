@@ -49,7 +49,7 @@ def complete_user_mobile_signup():
 	student_nationality = frappe.form_dict.student_nationality
 	student_language = frappe.form_dict.student_language
 	student_dob = frappe.form_dict.student_dob
-	educational_certificate = frappe.form_dict.educational_certificate
+	major = frappe.form_dict.major
 	educational_level = frappe.form_dict.educational_level
 	student_country = frappe.form_dict.student_country
 	student_city = frappe.form_dict.student_city
@@ -70,7 +70,7 @@ def complete_user_mobile_signup():
 		"student_nationality": student_nationality,
 		"student_language": student_language,
 		"student_dob":student_dob,
-		"educational_certificate":educational_certificate,
+		"major":major,
 		"educational_level":educational_level,
 		"student_country":student_country,
 		"student_city":student_city,
