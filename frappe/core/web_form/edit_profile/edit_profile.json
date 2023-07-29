@@ -21,7 +21,7 @@
  "list_columns": [],
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2023-05-13 13:34:43.609769",
+ "modified": "2023-07-29 19:59:38.533771",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "edit-profile",
@@ -31,7 +31,7 @@
  "route": "update-profile",
  "show_attachments": 0,
  "show_list": 0,
- "show_sidebar": 0,
+ "show_sidebar": 1,
  "success_message": "Profile updated successfully.",
  "success_url": "/me",
  "title": "Update Profile",
@@ -157,5 +157,6 @@
    "reqd": 0,
    "show_in_filter": 0
   }
- ]
+ ],
+ "website_sidebar": "Student Menu"
 }
