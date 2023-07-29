@@ -22,9 +22,22 @@
   .form-complete-signup {
     display: none;
   }
+  #major{
+    display: none;
+  }
 </style>
 <script type="text/javascript">
-
+  function checkIfMajorEnabled(){
+    var educational_level =document.querySelector("#educational_level").value;
+    return ["بكالوريوس", "ماجستير", "دكتوراة"].includes(educational_level)
+  }
+  function educationalLevelOnChange(e){
+    if (checkIfMajorEnabled()){
+      document.querySelector("#major").style.display="block";
+    }else{
+      document.querySelector("#major").style.display="none";
+    }
+  };
   function toggleCompleteSignupFields() {
     document.querySelectorAll('.form-signup > .page-card-actions > *').forEach(e => e.style.display = 'none')
     document.querySelectorAll('.form-signup > .page-card-body').forEach(e => e.style.display = 'none')
@@ -45,11 +58,13 @@
         args: {
           "id_token": idToken,
           "password": document.querySelector("#signup_password").value,
-          "full_name": document.querySelector("#signup_username").value,
+          "first_name": document.querySelector("#first_name").value,
+          "middle_name": document.querySelector("#middle_name").value,
+          "last_name": document.querySelector("#last_name").value,
           "student_nationality": document.querySelector("#student_nationality").value,
           "student_language": document.querySelector("#student_language").value,
           "student_dob": document.querySelector("#student_dob").value,
-          "major": document.querySelector("#major").value,
+          "major":  checkIfMajorEnabled() ? document.querySelector("#major").value : "",
           "educational_level": document.querySelector("#educational_level").value,
           "student_country": document.querySelector("#student_country").value,
           "student_city": document.querySelector("#student_city").value,
@@ -78,8 +93,16 @@
   }
 
   function checkMissingFields() {
-    if (document.querySelector("#signup_username").value == '') {
-      frappe.msgprint('{{_("Please fill full name field.")}}');
+    if (document.querySelector("#first_name").value == '') {
+      frappe.msgprint('{{_("Please fill first name field.")}}');
+      return false;
+    }
+    if (document.querySelector("#middle_name").value == '') {
+      frappe.msgprint('{{_("Please fill middle name field.")}}');
+      return false;
+    }
+    if (document.querySelector("#last_name").value == '') {
+      frappe.msgprint('{{_("Please fill last name field.")}}');
       return false;
     }
     if (document.querySelector("#signup_password").value == '') {
@@ -102,7 +125,7 @@
       frappe.msgprint('{{_("Please fill date of birth field.")}}');
       return false;
     }
-    if (document.querySelector("#major").value == '') {
+    if (checkIfMajorEnabled() && document.querySelector("#major").value == '') {
       frappe.msgprint('{{_("Please fill major field.")}}');
       return false;
     }
@@ -186,9 +209,19 @@
 <div class="form-complete-signup" role="form">
   <div class="page-card-body">
     <div class="form-group">
-      <label class="form-label sr-only" for="signup_username">{{ _("Full Name") }}</label>
-      <input type="text" id="signup_username" name="user-phone-name" class="form-control"
-        placeholder="{{ _('Full Name') }}" autocomplete="name">
+      <label class="form-label sr-only" for="first_name">{{ _("First Name") }}</label>
+      <input type="text" id="first_name" name="first_name" class="form-control"
+        placeholder="{{ _('First Name') }}" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="middle_name">{{ _("Middle Name") }}</label>
+      <input type="text" id="middle_name" name="middle_name" class="form-control"
+        placeholder="{{ _('Middle Name') }}" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <label class="form-label sr-only" for="last_name">{{ _("Last Name") }}</label>
+      <input type="text" id="last_name" name="last_name" class="form-control"
+        placeholder="{{ _('Last Name') }}" autocomplete="name">
     </div>
     <div class="form-group">
       <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
@@ -231,22 +264,22 @@
         placeholder="{{ _('Date of Birth') }}">
     </div>
     <div class="form-group">
+      <label class="form-label sr-only" for="educational_level">{{ _("Educational Level") }}</label>
+      <select type="" id="educational_level" onchange="educationalLevelOnChange(this)" name="educational-level" class="form-control"
+        placeholder="{{_('Educational Level')}}">
+        <option value="">{{_('Educational Level')}}</option>
+        {% for certificate in get_doctype_data('Educational Level') %}
+        <option value="{{certificate.get('name')}}">{{_(certificate.get('name'))}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
       <label class="form-label sr-only" for="major">{{ _("Major") }}</label>
       <select type="" id="major" name="major" class="form-control"
         placeholder="{{_('Major')}}">
         <option value="">{{_('Major')}}</option>
         {% for major in get_doctype_data('Major') %}
         <option value="{{major.get('name')}}">{{_(major.get('name'))}}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="form-label sr-only" for="educational_level">{{ _("Educational Level") }}</label>
-      <select type="" id="educational_level" name="educational-level" class="form-control"
-        placeholder="{{_('Educational Level')}}">
-        <option value="">{{_('Educational Level')}}</option>
-        {% for certificate in get_doctype_data('Educational Level') %}
-        <option value="{{certificate.get('name')}}">{{_(certificate.get('name'))}}</option>
         {% endfor %}
       </select>
     </div>

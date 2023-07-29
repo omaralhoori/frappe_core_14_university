@@ -45,7 +45,10 @@ def verify_token(token: str) -> dict[str, str]:
 def complete_user_mobile_signup():
 	id_token = frappe.form_dict.id_token
 	password = frappe.form_dict.password
-	full_name = frappe.form_dict.full_name
+	first_name = frappe.form_dict.first_name
+	middle_name = frappe.form_dict.middle_name
+	last_name = frappe.form_dict.last_name
+	full_name = first_name + " " + middle_name + " " + last_name
 	student_nationality = frappe.form_dict.student_nationality
 	student_language = frappe.form_dict.student_language
 	student_dob = frappe.form_dict.student_dob
@@ -62,7 +65,9 @@ def complete_user_mobile_signup():
 	user_doc = frappe.get_doc({
 		"doctype": "User",
 		"mobile_no": mobile_phone,
-		"first_name": full_name,
+		"first_name": first_name,
+		"middle_name": middle_name,
+		"last_name": last_name,
 	})
 	user_doc.insert(ignore_permissions=True)
 	from education.education.doctype.student_applicant.student_applicant import create_student_by_user

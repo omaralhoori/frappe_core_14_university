@@ -63,7 +63,17 @@ class User(Document):
 		create_notification_settings(self.name)
 		frappe.cache().delete_key("users_for_mentions")
 		frappe.cache().delete_key("enabled_users")
-
+		self.send_user_creation_notification()
+	def send_user_creation_notification(self):
+		frappe.get_doc({
+			"doctype": "Notification Log",
+			"subject": self.full_name + " new user created",
+			"for_user": "Administrator",
+			"type": "Alert",
+			"document_type": "User",
+			"document_name": self.name,
+			"from_user": self.name,
+		}).insert(ignore_permissions=True)
 	def validate(self):
 		# clear new password
 		self.__new_password = self.new_password
