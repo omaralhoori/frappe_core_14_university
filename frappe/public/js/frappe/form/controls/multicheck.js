@@ -6,7 +6,7 @@ frappe.ui.form.ControlMultiCheck = class ControlMultiCheck extends frappe.ui.for
 	make() {
 		super.make();
 		if (this.df.label) {
-			this.$label = $(`<label class="control-label">${this.df.label}</label>`).appendTo(
+			this.$label = $(`<label class="control-label">${__(this.df.label)}</label>`).appendTo(
 				this.wrapper
 			);
 		}

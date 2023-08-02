@@ -38,7 +38,7 @@
 				{{ _("Discard", null, "Button in web form") }}
 			</button>
 			<!-- submit button -->
-			<button type="submit" class="submit-btn btn btn-primary btn-sm ml-2">{{ button_label or _("Submit", null, "Button in web form") }}</button>
+			<button type="submit" class="submit-btn btn btn-primary btn-sm ml-2">{{ _(button_label) or _("Submit", null, "Button in web form") }}</button>
 		{% endif %}
 	</div>
 {% endmacro %}
@@ -137,11 +137,11 @@
 			{% if success_url %}
 				<div class="success_url_message">
 					<p>
-						<span>Click on this </span>
+						<span>{{_('Click on this')}} </span>
 						<a href="{{ success_url }}">{{_("URL")}}</a>
-						<span> if you are not redirected within </span>
+						<span> {{_('if you are not redirected within')}} </span>
 						<span class="time">5</span>
-						<span> seconds.</span>
+						<span> {{_('seconds.')}}</span>
 					</p>
 				</div>
 			{% else %}
