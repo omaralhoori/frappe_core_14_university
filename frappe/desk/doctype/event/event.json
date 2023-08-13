@@ -75,7 +75,7 @@
    "label": "Event Type",
    "oldfieldname": "event_type",
    "oldfieldtype": "Select",
-   "options": "Private\nPublic\nCancelled",
+   "options": "Public\nPrivate\nCancelled",
    "reqd": 1,
    "search_index": 1
   },
@@ -295,7 +295,7 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2022-08-12 19:24:34.794098",
+ "modified": "2023-08-13 15:32:58.312543",
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Event",

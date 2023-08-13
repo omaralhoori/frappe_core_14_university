@@ -98,5 +98,16 @@
 	</div>
 	{% endif %}
 </div>
+{% if events|length > 0 %}
+<div>
+	<h3>{{_('Announcements')}}</h3>
+{% for event in events %}
+	<div class="alert alert-info alert-dismissible fade show" role="alert">
+		<strong>{{event.get("subject")}}</strong>
+	</div>
+{%endfor%}	
 </div>
+{%endif%}
+</div>
+
 {% endblock %}

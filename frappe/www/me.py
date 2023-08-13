@@ -15,7 +15,16 @@ def get_context(context):
 	context.current_user = frappe.get_doc("User", frappe.session.user)
 	context.show_sidebar = True
 	context.messages = get_messages()
+	context.events = get_events()
+	print(context.events)
 
+def get_events():
+	return frappe.db.sql("""
+		SELECT subject FROM `tabEvent` 
+		WHERE status='Open' AND event_type='Public' AND event_category='Event'
+		AND starts_on <= NOW() AND ends_on >= NOW()
+		ORDER BY creation desc
+	""", as_dict=True)
 def get_messages():
 	user = frappe.session.user
 	student = frappe.db.get_value("Student", {"user": user}, ['name'])
