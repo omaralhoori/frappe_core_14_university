@@ -68,6 +68,7 @@ def complete_user_mobile_signup():
 		"first_name": first_name,
 		"middle_name": middle_name,
 		"last_name": last_name,
+		"password_updated": 1
 	})
 	user_doc.insert(ignore_permissions=True)
 	from education.education.doctype.student_applicant.student_applicant import create_student_by_user

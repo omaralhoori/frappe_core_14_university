@@ -94,6 +94,7 @@
   "generate_keys",
   "column_break_65",
   "api_secret",
+  "password_updated",
   "connections_tab"
  ],
  "fields": [
@@ -707,6 +708,13 @@
    "fieldname": "first_login",
    "fieldtype": "Check",
    "label": "First Login"
+  },
+  {
+   "default": "0",
+   "fieldname": "password_updated",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Password Updated"
   }
  ],
  "icon": "fa fa-user",
@@ -769,7 +777,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-05-30 06:23:41.526791",
+ "modified": "2023-08-28 10:52:51.410973",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",

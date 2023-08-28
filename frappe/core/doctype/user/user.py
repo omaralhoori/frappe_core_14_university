@@ -731,6 +731,7 @@ def update_password(
 
 	frappe.db.set_value("User", user, "last_password_reset_date", today())
 	frappe.db.set_value("User", user, "reset_password_key", "")
+	frappe.db.set_value("User", user, "password_updated", 1)
 
 	if user_doc.user_type == "System User":
 		return "/app"
