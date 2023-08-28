@@ -171,7 +171,7 @@ def redirect_user_update_password(redirect_to, path):
 	
 	if path == 'update-password':
 		return redirect_to
-	if path.startswith('update-password'):
+	if path.startswith('update-password') or path.startswith('update-student-info'):
 		return redirect_to
 	if len(path) > 50: return redirect_to
 
