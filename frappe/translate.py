@@ -122,7 +122,7 @@ def get_parent_language(lang: str) -> str:
 	if is_language_variant:
 		return lang[: lang.index("-")]
 
-
+@frappe.whitelist()
 def get_user_lang(user: str = None) -> str:
 	"""Set frappe.local.lang from user preferences on session beginning or resumption"""
 	user = user or frappe.session.user
@@ -153,6 +153,15 @@ def set_default_language(lang):
 	if frappe.db.get_default("lang") != lang:
 		frappe.db.set_default("lang", lang)
 	frappe.local.lang = lang
+
+
+@frappe.whitelist()
+def set_user_language(lang):
+	"""Set Global default language"""
+	user = frappe.session.user
+	frappe.db.set_value("User", user, "language", lang)
+	frappe.cache().hset("lang", user, lang)
+
 
 
 def get_lang_dict():
