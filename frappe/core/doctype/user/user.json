@@ -263,7 +263,6 @@
    "fieldtype": "Data",
    "label": "Mobile No",
    "options": "Phone",
-   "set_only_once": 1,
    "unique": 1
   },
   {
@@ -777,7 +776,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-08-28 10:52:51.410973",
+ "modified": "2023-09-02 17:09:48.823781",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
