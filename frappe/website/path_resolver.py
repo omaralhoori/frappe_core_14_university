@@ -112,9 +112,14 @@ def resolve_redirect(path, query_string=None):
 
 	redirect_to = frappe.cache().hget("website_redirects", path)
 	
+	old_redirect_to = redirect_to
+	
 	redirect_to = redirect_uncompleted_user(redirect_to, path)
 	
 	redirect_to = redirect_user_update_password(redirect_to, path)
+
+	if old_redirect_to == redirect_to:
+		redirect_to = redirect_user_program_enrollment(redirect_to, path)
 
 	if redirect_to:
 		frappe.flags.redirect_location = redirect_to
@@ -176,6 +181,27 @@ def redirect_user_update_password(redirect_to, path):
 	if len(path) > 50: return redirect_to
 
 	return 'update-password'
+
+def redirect_user_program_enrollment(redirect_to, path):
+	if frappe.session.user == 'Guest' or frappe.session.user == 'Administrator': return redirect_to
+	# try:
+	# 	if not frappe.db.get_single_value("Education Settings", "force_student_to_update_info"): return redirect_to
+	# except:
+	# 	return redirect_to
+	if not frappe.db.get_single_value("Education Settings", "go_to_program_enrollment_page"): return redirect_to
+	user = frappe.db.get_value("User", frappe.session.user, ["user_type"])
+	if user ==  'System User': return redirect_to
+	
+	if path == 'program_enrollment':
+		return redirect_to
+	if path.startswith('program_enrollment') or path.startswith('update-student-info'):
+		return redirect_to
+	if len(path) > 50: return redirect_to
+	student = frappe.db.get_value("Student", {"user": frappe.session.user}, 'name')
+	if frappe.db.exists("Program Enrollment", {"student": student}):
+		return redirect_to
+
+	return 'program_enrollment'
 
 def resolve_path(path):
 	if not path:

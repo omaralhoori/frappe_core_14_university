@@ -1,4 +1,5 @@
 {% macro render_sidebar_item(item) %}
+{% if render_student_sidebar(item) %}
 <li class="{{ 'sidebar-group' if item.group_title else 'sidebar-item' }}">
 	{%- if item.group_title -%}
 
@@ -22,6 +23,7 @@
 
 	{%- endif -%}
 </li>
+{% endif %}
 {% endmacro %}
 
 {% macro render_sidebar_items(items) %}

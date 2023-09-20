@@ -149,3 +149,18 @@ def is_rtl(rtl=None):
 def get_doctype_data(doctype):
 	import frappe
 	return frappe.db.get_all(doctype, ['name'])
+
+\
+def render_student_sidebar(item):
+	import frappe
+	if not frappe.db.get_value("Student", {"user": frappe.session.user}, ['is_coursepack_student']):
+		return True
+	porgram_sidebar_items = [
+		'Admission',
+		'Course Enrollment',
+		'Transcript',
+		'Study Postponement Request',
+		'Drop Course Request'
+	]
+	
+	return False if item.get('title') in porgram_sidebar_items else True

@@ -13,7 +13,7 @@ frappe.ui.form.on("Portal Settings", {
 		};
 	},
 	onload: function (frm) {
-		frm.get_field("menu").grid.only_sortable();
+		//frm.get_field("menu").grid.only_sortable();
 	},
 	refresh: function (frm) {
 		frm.add_custom_button(__("Reset"), function () {
