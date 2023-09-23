@@ -153,14 +153,21 @@ def get_doctype_data(doctype):
 \
 def render_student_sidebar(item):
 	import frappe
-	if not frappe.db.get_value("Student", {"user": frappe.session.user}, ['is_coursepack_student']):
+	coursepack_student = frappe.db.get_value("Student", {"user": frappe.session.user}, ['is_coursepack_student'])
+	if coursepack_student:
+		porgram_sidebar_items = [
+			'Admission',
+			'Course Enrollment',
+			'Transcript',
+			'Study Postponement Request',
+			'Drop Course Request'
+		]
+		if item.get('title') in porgram_sidebar_items:
+			return False
+		if item.get('title') == 'Fees' and not frappe.db.get_single_value("Education Settings", "enable_coursepack_fees"):
+			return False
 		return True
-	porgram_sidebar_items = [
-		'Admission',
-		'Course Enrollment',
-		'Transcript',
-		'Study Postponement Request',
-		'Drop Course Request'
-	]
+	if item.get('title') == 'Fees' and not frappe.db.get_single_value("Education Settings", "enable_program_fees"):
+			return False
+	return True
 	
-	return False if item.get('title') in porgram_sidebar_items else True
