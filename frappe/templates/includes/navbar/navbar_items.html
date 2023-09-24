@@ -77,7 +77,7 @@
 		<hr>
 		{% for item in sidebar_items -%}
 		<li class="nav-item">
-			{% if item.type != 'input' %}
+			{% if item.type != 'input' and render_student_sidebar(item) %}
 				<a href="{{ item.route }}" class="nav-link {{ 'text-dark' if pathname==item.route else 'text-muted'}}"
 					{% if item.target %}target="{{ item.target }}"{% endif %}>
 					{{ _(item.title or item.label) }}
