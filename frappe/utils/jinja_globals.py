@@ -169,5 +169,10 @@ def render_student_sidebar(item):
 		return True
 	if item.get('title') == 'Fees' and not frappe.db.get_single_value("Education Settings", "enable_program_fees"):
 			return False
+	porgram_sidebar_items = [
+			'Drop Coursepack Request'
+		]
+	if item.get('title') in porgram_sidebar_items:
+		return False
 	return True
 	
