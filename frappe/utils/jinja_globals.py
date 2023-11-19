@@ -160,7 +160,8 @@ def render_student_sidebar(item):
 			'Course Enrollment',
 			'Transcript',
 			'Study Postponement Request',
-			'Drop Course Request'
+			'Drop Course Request',
+			"Program Certificate Request"
 		]
 		if item.get('title') in porgram_sidebar_items:
 			return False
