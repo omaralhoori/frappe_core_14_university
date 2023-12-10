@@ -23,7 +23,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-05 20:32:29.739826",
+ "modified": "2023-12-10 05:37:57.653259",
  "modified_by": "Administrator",
  "module": "Geo",
  "name": "Nationality",
@@ -41,6 +41,10 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
   }
  ],
  "sort_field": "modified",

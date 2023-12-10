@@ -188,7 +188,9 @@ def redirect_user_program_enrollment(redirect_to, path):
 	# 	if not frappe.db.get_single_value("Education Settings", "force_student_to_update_info"): return redirect_to
 	# except:
 	# 	return redirect_to
-	if not frappe.db.get_single_value("Education Settings", "go_to_program_enrollment_page"): return redirect_to
+	try:
+		if not frappe.db.get_single_value("Education Settings", "go_to_program_enrollment_page"): return redirect_to
+	except: return redirect_to
 	user = frappe.db.get_value("User", frappe.session.user, ["user_type"])
 	if user ==  'System User': return redirect_to
 	

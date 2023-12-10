@@ -148,7 +148,10 @@ def is_rtl(rtl=None):
 
 def get_doctype_data(doctype):
 	import frappe
-	return frappe.db.get_all(doctype, ['name'])
+	try:
+		return frappe.db.get_all(doctype, ['name'])
+	except:
+		return []
 
 \
 def render_student_sidebar(item):
