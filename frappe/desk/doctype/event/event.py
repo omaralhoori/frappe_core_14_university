@@ -228,10 +228,11 @@ def send_event_digest():
 
 
 @frappe.whitelist()
-def get_events(start, end, user=None, for_reminder=False, filters=None) -> list[frappe._dict]:
+def get_events(start=None, end=None, user=None, for_reminder=False, filters=None) -> list[frappe._dict]:
 	if not user:
 		user = frappe.session.user
-
+	if not start or not end:
+		return []
 	if isinstance(filters, str):
 		filters = json.loads(filters)
 
