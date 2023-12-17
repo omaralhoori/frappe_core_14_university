@@ -1,1 +1,0 @@
-{{doc.full_name}} new user created.
