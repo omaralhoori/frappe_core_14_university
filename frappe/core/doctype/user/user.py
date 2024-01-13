@@ -28,6 +28,7 @@ from frappe.utils import (
 	now_datetime,
 	today,
 )
+from frappe.utils.data import get_url
 from frappe.utils.password import check_password, get_password_reset_limit
 from frappe.utils.password import update_password as _update_password
 from frappe.utils.user import get_system_managers
@@ -882,6 +883,8 @@ def sign_up(email: str, full_name: str, redirect_to: str) -> tuple[int, str]:
 		default_role = frappe.db.get_single_value("Portal Settings", "default_role")
 		if default_role:
 			user.add_roles(default_role)
+		from education.education.doctype.student_applicant.student_applicant import create_student_by_user
+		create_student_by_user(user, {})
 
 		if redirect_to:
 			frappe.cache().hset("redirect_after_login", user.name, redirect_to)
@@ -1198,3 +1201,21 @@ def get_enabled_users():
 		return enabled_users
 
 	return frappe.cache().get_value("enabled_users", _get_enabled_users)
+
+
+@frappe.whitelist()
+def generate_temporary_login_link(email: str, expiry: int):
+	frappe.only_for("System Manager")
+	assert isinstance(email, str)
+
+	if not frappe.db.exists("User", email):
+		frappe.throw(
+			_("User with email address {0} does not exist").format(email), frappe.DoesNotExistError
+		)
+	user = frappe.get_doc('User', email)
+	if user.user_type == "System User":
+		frappe.throw(_("You are not allowed to generate login link for this user."))
+	key = frappe.generate_hash()
+	frappe.cache().set_value(f"one_time_login_key:{key}", email, expires_in_sec=expiry * 60)
+
+	return get_url(f"/api/method/frappe.www.login.login_via_key?key={key}")

@@ -59,17 +59,17 @@
           "id_token": idToken,
           "password": document.querySelector("#signup_password").value,
           "first_name": document.querySelector("#first_name").value,
-          "middle_name": document.querySelector("#middle_name").value,
-          "last_name": document.querySelector("#last_name").value,
-          "student_nationality": document.querySelector("#student_nationality").value,
-          "student_language": document.querySelector("#student_language").value,
-          "student_dob": document.querySelector("#student_dob").value,
-          "major":  checkIfMajorEnabled() ? document.querySelector("#major").value : "",
-          "educational_level": document.querySelector("#educational_level").value,
-          "student_country": document.querySelector("#student_country").value,
-          "student_city": document.querySelector("#student_city").value,
-          "student_status": document.querySelector("#student_status").value,
-          "student_gender": document.querySelector("#student_gender").value,
+          // "middle_name": document.querySelector("#middle_name").value,
+          // "last_name": document.querySelector("#last_name").value,
+          // "student_nationality": document.querySelector("#student_nationality").value,
+          // "student_language": document.querySelector("#student_language").value,
+          // "student_dob": document.querySelector("#student_dob").value,
+          // "major":  checkIfMajorEnabled() ? document.querySelector("#major").value : "",
+          // "educational_level": document.querySelector("#educational_level").value,
+          // "student_country": document.querySelector("#student_country").value,
+          // "student_city": document.querySelector("#student_city").value,
+          // "student_status": document.querySelector("#student_status").value,
+          // "student_gender": document.querySelector("#student_gender").value,
         },
         callback: (res) => {
           if (res.message.msg) {
@@ -97,14 +97,14 @@
       frappe.msgprint('{{_("Please fill first name field.")}}');
       return false;
     }
-    if (document.querySelector("#middle_name").value == '') {
-      frappe.msgprint('{{_("Please fill middle name field.")}}');
-      return false;
-    }
-    if (document.querySelector("#last_name").value == '') {
-      frappe.msgprint('{{_("Please fill last name field.")}}');
-      return false;
-    }
+    // if (document.querySelector("#middle_name").value == '') {
+    //   frappe.msgprint('{{_("Please fill middle name field.")}}');
+    //   return false;
+    // }
+    // if (document.querySelector("#last_name").value == '') {
+    //   frappe.msgprint('{{_("Please fill last name field.")}}');
+    //   return false;
+    // }
     if (document.querySelector("#signup_password").value == '') {
       frappe.msgprint('{{_("Please fill password field.")}}');
       return false;
@@ -113,42 +113,42 @@
       frappe.msgprint('{{_("Please fill confirm password field.")}}');
       return false;
     }
-    if (document.querySelector("#student_nationality").value == '') {
-      frappe.msgprint('{{_("Please fill nationality field.")}}');
-      return false;
-    }
-    if (document.querySelector("#student_language").value == '') {
-      frappe.msgprint('{{_("Please fill native language field.")}}');
-      return false;
-    }    
-    if (document.querySelector("#student_dob").value == '') {
-      frappe.msgprint('{{_("Please fill date of birth field.")}}');
-      return false;
-    }
-    if (checkIfMajorEnabled() && document.querySelector("#major").value == '') {
-      frappe.msgprint('{{_("Please fill major field.")}}');
-      return false;
-    }
-    if (document.querySelector("#educational_level").value == '') {
-      frappe.msgprint('{{_("Please fill educational level field.")}}');
-      return false;
-    }
-    if (document.querySelector("#student_country").value == '') {
-      frappe.msgprint('{{_("Please fill country field.")}}');
-      return false;
-    }
-    if (document.querySelector("#student_city").value == '') {
-      frappe.msgprint('{{_("Please fill city field.")}}');
-      return false;
-    }
-  if (document.querySelector("#student_status").value == '') {
-    frappe.msgprint('{{_("Please fill marital status field.")}}');
-    return false;
-  }
-  if (document.querySelector("#student_gender").value == '') {
-    frappe.msgprint('{{_("Please fill gender field.")}}');
-    return false;
-  }
+  //   if (document.querySelector("#student_nationality").value == '') {
+  //     frappe.msgprint('{{_("Please fill nationality field.")}}');
+  //     return false;
+  //   }
+  //   if (document.querySelector("#student_language").value == '') {
+  //     frappe.msgprint('{{_("Please fill native language field.")}}');
+  //     return false;
+  //   }    
+  //   if (document.querySelector("#student_dob").value == '') {
+  //     frappe.msgprint('{{_("Please fill date of birth field.")}}');
+  //     return false;
+  //   }
+  //   if (checkIfMajorEnabled() && document.querySelector("#major").value == '') {
+  //     frappe.msgprint('{{_("Please fill major field.")}}');
+  //     return false;
+  //   }
+  //   if (document.querySelector("#educational_level").value == '') {
+  //     frappe.msgprint('{{_("Please fill educational level field.")}}');
+  //     return false;
+  //   }
+  //   if (document.querySelector("#student_country").value == '') {
+  //     frappe.msgprint('{{_("Please fill country field.")}}');
+  //     return false;
+  //   }
+  //   if (document.querySelector("#student_city").value == '') {
+  //     frappe.msgprint('{{_("Please fill city field.")}}');
+  //     return false;
+  //   }
+  // if (document.querySelector("#student_status").value == '') {
+  //   frappe.msgprint('{{_("Please fill marital status field.")}}');
+  //   return false;
+  // }
+  // if (document.querySelector("#student_gender").value == '') {
+  //   frappe.msgprint('{{_("Please fill gender field.")}}');
+  //   return false;
+  // }
     return true;
   }
 
@@ -213,7 +213,7 @@
       <input type="text" id="first_name" name="first_name" class="form-control"
         placeholder="{{ _('First Name') }}" autocomplete="name">
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label class="form-label sr-only" for="middle_name">{{ _("Middle Name") }}</label>
       <input type="text" id="middle_name" name="middle_name" class="form-control"
         placeholder="{{ _('Middle Name') }}" autocomplete="name">
@@ -222,7 +222,7 @@
       <label class="form-label sr-only" for="last_name">{{ _("Last Name") }}</label>
       <input type="text" id="last_name" name="last_name" class="form-control"
         placeholder="{{ _('Last Name') }}" autocomplete="name">
-    </div>
+    </div> -->
     <div class="form-group">
       <label class="form-label sr-only" for="signup_password">{{ _("Password") }}</label>
       <input type="password" id="signup_password" name="user-phone-password" class="form-control"
@@ -233,7 +233,7 @@
       <input type="password" id="signup_confirm_password" name="user-phone-password-confirm" class="form-control"
         placeholder="{{_('Confirm Password')}}" autocomplete="password">
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label class="form-label sr-only" for="student_nationality">{{ _("Nationality") }}</label>
       <select type="" id="student_nationality" name="student-nationality" class="form-control"
         placeholder="{{_('Nationality')}}">
@@ -306,7 +306,7 @@
         <option value="Widowed">{{_('Widowed')}}</option>
         <option value="Divorced">{{_('Divorced')}}</option>
       </select>
-    </div>
+    </div> -->
   </div>
   <div class="page-card-actions">
     <button class="btn btn-sm btn-primary btn-block btn-signup" id="complete-signup-btn" type="submit">{{ _("Complete Sign up") }}</button>

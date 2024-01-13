@@ -164,6 +164,21 @@ frappe.ui.form.on("User", {
 				},
 				__("Password")
 			);
+			frm.add_custom_button(
+				__("Generate Login Link"),
+				function () {
+					frappe.call({
+						method: "frappe.core.doctype.user.user.generate_temporary_login_link",
+						args: {
+							email: frm.doc.name,
+							expiry: 60
+						},
+						callback: res => {
+							frappe.msgprint(res.message)
+						}
+					});
+				},
+			);
 
 			if (frappe.user.has_role("System Manager")) {
 				frappe.db.get_single_value("LDAP Settings", "enabled").then((value) => {

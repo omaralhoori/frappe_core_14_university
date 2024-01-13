@@ -46,8 +46,8 @@ def complete_user_mobile_signup():
 	id_token = frappe.form_dict.id_token
 	password = frappe.form_dict.password
 	first_name = frappe.form_dict.first_name
-	middle_name = frappe.form_dict.middle_name
-	last_name = frappe.form_dict.last_name
+	middle_name = frappe.form_dict.middle_name or ""
+	last_name = frappe.form_dict.last_name or ""
 	full_name = first_name + " " + middle_name + " " + last_name
 	student_nationality = frappe.form_dict.student_nationality
 	student_language = frappe.form_dict.student_language
