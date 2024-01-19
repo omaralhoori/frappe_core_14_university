@@ -121,7 +121,6 @@
    "oldfieldname": "email",
    "oldfieldtype": "Data",
    "options": "Email",
-   "set_only_once": 1,
    "unique": 1
   },
   {
@@ -776,7 +775,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-09-02 17:09:48.823781",
+ "modified": "2024-01-18 17:51:33.589140",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
