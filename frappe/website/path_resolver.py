@@ -116,10 +116,10 @@ def resolve_redirect(path, query_string=None):
 	
 	redirect_to = redirect_uncompleted_user(redirect_to, path)
 	
-	redirect_to = redirect_user_update_password(redirect_to, path)
+	# redirect_to = redirect_user_update_password(redirect_to, path)
 
-	if old_redirect_to == redirect_to:
-		redirect_to = redirect_user_program_enrollment(redirect_to, path)
+	# if old_redirect_to == redirect_to and redirect_to != 'update-password':
+	# 	redirect_to = redirect_user_program_enrollment(redirect_to, path)
 
 	if redirect_to:
 		frappe.flags.redirect_location = redirect_to
