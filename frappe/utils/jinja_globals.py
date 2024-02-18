@@ -164,7 +164,8 @@ def render_student_sidebar(item):
 			'Transcript',
 			'Study Postponement Request',
 			'Drop Course Request',
-			"Program Certificate Request"
+			"Program Certificate Request",
+			'Withdraw From Course'
 		]
 		if item.get('title') in porgram_sidebar_items:
 			return False
@@ -172,6 +173,8 @@ def render_student_sidebar(item):
 			return False
 		return True
 	if item.get('title') == 'Fees' and not frappe.db.get_single_value("Education Settings", "enable_program_fees"):
+			return False
+	if item.get('title') == 'Withdraw From Course' and not frappe.db.get_single_value("Education Settings", "enable_withdraw_from_course"):
 			return False
 	porgram_sidebar_items = [
 			'Drop Coursepack Request'
