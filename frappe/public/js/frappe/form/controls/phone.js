@@ -209,12 +209,17 @@ frappe.ui.form.ControlPhone = class ControlPhone extends frappe.ui.form.ControlD
 	}
 
 	update_padding() {
+		var padding = 'left'
+		var dir = document.querySelector('html').getAttribute("dir")
+		if (dir =='rtl'){
+			padding= 'right';
+		}
 		let len = this.$isd.text().length;
 		let diff = len - 2;
 		if (len > 2) {
-			this.$input.css("padding-left", 60 + diff * 7);
+			this.$input.css(`padding-${padding}`, 60 + diff * 7);
 		} else {
-			this.$input.css("padding-left", 60);
+			this.$input.css(`padding-${padding}`, 60);
 		}
 	}
 };
