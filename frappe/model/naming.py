@@ -311,7 +311,17 @@ def parse_naming_series(
 		number_generator = getseries
 
 	series_set = False
-	today = now_datetime()
+	#today = now_datetime()
+	#ibrahim
+	if doc!='':
+		if doc.get("posting_date"):
+			today = frappe.utils.get_datetime(doc.get("posting_date"))
+		else:
+			today = now_datetime()
+	else:
+		today = now_datetime()
+
+
 	for e in parts:
 		if not e:
 			continue
